@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Lucida Console', 'Monospace', 'sans-serif';
 }
 
 .gridContainer {
@@ -9,4 +10,8 @@ body {
     flex-wrap: wrap;
     border: 2px solid black;
     padding: 20px;
+}
+
+button.clear {
+    margin-bottom: 20px;
 }
