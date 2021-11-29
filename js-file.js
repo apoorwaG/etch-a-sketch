@@ -1,15 +1,8 @@
 const gridContainer = document.querySelector(".gridContainer");
 const gridLength = 700;
-// gridContainer.style.width = `${gridLength}px`;
-// gridContainer.style.length = `${gridLength}px`;
-// gridContainer.setAttribute('style', `width: ${gridLength}px; height: ${gridLength}px`);
+gridContainer.style.width = `${gridLength}px`;
+gridContainer.style.height = `${gridLength}px`;
 
-
-function setBoxHandW(box, numBoxesPerSide){
-    let length = gridLength / numBoxesPerSide;
-    box.style.height = `${length}px`;
-    box.style.width = `${length}px`;
-}
 
 function getRandomRGB() {
     let r = Math.floor(Math.random() * 256);
@@ -84,52 +77,24 @@ function visitBox(event) {
 function populateGrid(gridContainer, numBoxesPerSide){
     const numBoxesTotal = numBoxesPerSide**2;
 
-    // for(let i = 0; i < numBoxesTotal; i++){
-    //     const box = document.createElement('div');
-    //     box.classList.add('box');
-    //     box.setAttribute('style', `flex: 0 0 auto; height: ${700/numBoxesPerSide}px; width: ${700/numBoxesPerSide}px`);
-    //     box.addEventListener('mouseover', visitBox);
-    //     gridContainer.appendChild(box);
-    //     console.log(1);
-    // }
-
-    for(let row = 0; row < numBoxesPerSide; row++){
-        const rowContainer = document.createElement('div');
-        rowContainer.classList.add('rowDiv');
-        rowContainer.setAttribute('style', `display: flex;`);
-        for(let column = 0; column < numBoxesPerSide; column++){
-            const box = document.createElement('div');
-            box.classList.add('box');
-            box.setAttribute('style', `flex: 1 1 auto; height: ${700/numBoxesPerSide}px; width: ${700/numBoxesPerSide}px`);
-            box.addEventListener('mouseover', visitBox);
-            rowContainer.appendChild(box);
-            console.log(1);
-        }
-        
-        gridContainer.appendChild(rowContainer);
+    for(let i = 0; i < numBoxesTotal; i++){
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.setAttribute('style', `flex: 0 0 ${100/numBoxesPerSide}%;`);
+        box.addEventListener('mouseover', visitBox);
+        gridContainer.appendChild(box);
     }
-
 }
 
 function resetGrid(event) {
-    let numBoxesPerSide = prompt("Enter number of squares you want per side (between 1 and 100). \nDefault: 16", "16");
+    let numBoxesPerSide = prompt("Enter the number of squares you want per side (between 1 and 64). \nDefault: 16", "16");
     if (numBoxesPerSide === null) return;
 
-    // first remove the boxes in each row
-    const rowContainers = document.querySelectorAll('.rowDiv');
-    rowContainers.forEach(row => {
-        const boxes = row.childNodes;
-        boxes.forEach(box => {
-            row.removeChild(box);
-        });
-    });
-    
-
-    // now remove the rows one by one
+    // first remove all boxes
     const container = document.querySelector('.gridContainer');
-    const rows = document.querySelectorAll('.rowDiv');
-    rows.forEach(row => {
-        container.removeChild(row)
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        container.removeChild(box);
     });
 
     numBoxesPerSide = +numBoxesPerSide;
