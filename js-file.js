@@ -77,7 +77,6 @@ function visitBox(event) {
 
 function populateGrid(gridContainer, numBoxesPerSide){
     const numBoxesTotal = numBoxesPerSide**2;
-
     for(let i = 0; i < numBoxesTotal; i++){
         const box = document.createElement('div');
         box.classList.add('box');
@@ -88,8 +87,15 @@ function populateGrid(gridContainer, numBoxesPerSide){
 }
 
 function resetGrid(event) {
-    let numBoxesPerSide = prompt("Enter the number of squares you want per side (between 1 and 64). \nDefault: 16", "16");
-    if (numBoxesPerSide === null) return;
+    let unsatisfied = true;
+    let numBoxesPerSide = null;
+    while(unsatisfied){
+        numBoxesPerSide = prompt("Enter the number of squares you want per side (between 1 and 64). \nDefault: 16", "16");
+        if(numBoxesPerSide === null) return;
+        if(+numBoxesPerSide && +numBoxesPerSide >= 1 && +numBoxesPerSide <= 64){
+            unsatisfied = false;
+        }
+    }
 
     // first remove all boxes
     const container = document.querySelector('.gridContainer');
@@ -99,11 +105,6 @@ function resetGrid(event) {
     });
 
     numBoxesPerSide = +numBoxesPerSide;
-
-    if(!numBoxesPerSide || numBoxesPerSide > 64) {
-        populateGrid(container, 16);
-    }
-
     populateGrid(container, numBoxesPerSide);
 }
 
